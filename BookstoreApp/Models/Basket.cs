@@ -8,7 +8,7 @@ namespace BookstoreApp.Models
     public class Basket
     {
         public List<BasketLineItem> Items { get; set; } = new List<BasketLineItem>();
-        public void AddItem (Book boo, int qty)
+        public virtual void AddItem (Book boo, int qty)
         {
             BasketLineItem Line = Items
                 .Where(b => b.Book.BookId == boo.BookId)
@@ -26,6 +26,16 @@ namespace BookstoreApp.Models
             {
                 Line.Quantity += qty;
             }
+        }
+
+        public virtual void RemoveItem(Book boo)
+        {
+            Items.RemoveAll(x => x.Book.BookId == boo.BookId);
+        }
+
+        public virtual void ClearBasket()
+        {
+            Items.Clear();
         }
         public double CalculateTotal()
         {
